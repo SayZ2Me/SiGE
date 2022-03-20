@@ -1,0 +1,25 @@
+﻿  win32_platform.cpp
+C:\Users\SayZ\Desktop\SiGE\graphics_lib.cpp(40,12): warning C4244: инициализация: преобразование "float" в "int", возможна потеря данных
+C:\Users\SayZ\Desktop\SiGE\graphics_lib.cpp(42,12): warning C4244: инициализация: преобразование "float" в "int", возможна потеря данных
+C:\Users\SayZ\Desktop\SiGE\graphics_lib.cpp(55,17): warning C4244: инициализация: преобразование "double" в "int", возможна потеря данных
+C:\Users\SayZ\Desktop\SiGE\graphics_lib.cpp(57,17): warning C4244: инициализация: преобразование "double" в "int", возможна потеря данных
+C:\Users\SayZ\Desktop\SiGE\graphics_lib.cpp(87,12): warning C4244: инициализация: преобразование "float" в "int", возможна потеря данных
+C:\Users\SayZ\Desktop\SiGE\graphics_lib.cpp(89,12): warning C4244: инициализация: преобразование "float" в "int", возможна потеря данных
+C:\Users\SayZ\Desktop\SiGE\graphics_lib.cpp(102,17): warning C4244: инициализация: преобразование "double" в "int", возможна потеря данных
+C:\Users\SayZ\Desktop\SiGE\graphics_lib.cpp(104,17): warning C4244: инициализация: преобразование "double" в "int", возможна потеря данных
+C:\Users\SayZ\Desktop\SiGE\graphics_lib.cpp(147,35): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+C:\Users\SayZ\Desktop\SiGE\graphics_lib.cpp(147,24): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+C:\Users\SayZ\Desktop\SiGE\graphics_lib.cpp(175,18): warning C4244: инициализация: преобразование "double" в "float", возможна потеря данных
+C:\Users\SayZ\Desktop\SiGE\graphics_lib.cpp(178,19): warning C4244: инициализация: преобразование "double" в "int", возможна потеря данных
+C:\Users\SayZ\Desktop\SiGE\graphics_lib.cpp(179,19): warning C4244: инициализация: преобразование "double" в "int", возможна потеря данных
+C:\Users\SayZ\Desktop\SiGE\graphics_lib.cpp(195,30): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
+C:\Users\SayZ\Desktop\SiGE\graphics_lib.cpp(195,27): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
+C:\Users\SayZ\Desktop\SiGE\graphics_lib.cpp(195,24): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
+C:\Users\SayZ\Desktop\SiGE\win32_platform.cpp(60,16): warning C4305: инициализация: усечение из "double" в "float"
+C:\Users\SayZ\Desktop\SiGE\win32_platform.cpp(77,18): warning C4018: <: несоответствие типов со знаком и без знака
+C:\Users\SayZ\Desktop\SiGE\win32_platform.cpp(82,30): warning C4244: аргумент: преобразование "_Rep" в "unsigned int", возможна потеря данных
+          with
+          [
+              _Rep=__int64
+          ]
+  SiGE.vcxproj -> C:\Users\SayZ\Desktop\SiGE\Debug\SiGE.exe

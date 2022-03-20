@@ -1,0 +1,4 @@
+C:\Repositories\SiGE\SiGE\Debug\SiGE.exe
+C:\Repositories\SiGE\SiGE\Debug\SiGE.pdb
+C:\Users\SayZ\Desktop\SiGE\Debug\SiGE.exe
+C:\Users\SayZ\Desktop\SiGE\Debug\SiGE.pdb

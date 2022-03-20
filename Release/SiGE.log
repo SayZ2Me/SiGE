@@ -1,0 +1,6 @@
+﻿  win32_platform.cpp
+  Создание кода
+  Previous IPDB and IOBJ mismatch, fall back to full compilation.
+  All 2 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Создание кода завершено
+  SiGE.vcxproj -> C:\Repositories\SiGE\SiGE\Release\SiGE.exe
