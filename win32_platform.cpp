@@ -2,9 +2,12 @@
 #include <winuser.h>
 #undef min
 #undef max
+#include <string>
+#include <ctime>
+#include <iostream>
 #include "app_info.h"
 #include "objects_lib.h"
-
+#include "dev_tools.h"
 #include <chrono>
 
 #define __CRTDBG_MAP_ALLOC
@@ -20,9 +23,11 @@ int g_windowHeight = 1280;
 int g_xDrawOffSet = g_windowWidth/2;
 int g_yDrawOffSet = g_windowHeight/2;
 void* g_bufferMemory;
+std::string g_debug_folder_name = "";
 BITMAPINFO g_bufferBitmapInfo;
 std::vector<Shape> g_scene;
-Camera player = Camera(Point(0, 0, 50));
+Camera player = Camera(Point(0, 0, 10));
+Debugger Debug = Debugger();
 POINT cursorPos;
 
 std::chrono::milliseconds drawTimeSum;
@@ -35,6 +40,7 @@ std::chrono::milliseconds frameStartTime;
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLine, int nCmdShow) 
 {
+	create_debug_folder(&g_debug_folder_name);
 
 	const wchar_t className[] = L"Standart Window Class";
 
@@ -91,6 +97,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLine,
 	//Clear Scene Memory
 	std::vector<Shape>().swap(g_scene);
 	_CrtDumpMemoryLeaks();
+
+	Debug.Log("drawTimeSum : "+std::to_string(drawTimeSum.count()), &g_debug_folder_name);
+	Debug.Log("projectionTimeSum : "+std::to_string(projectionTimeSum.count()), &g_debug_folder_name);
 
 	return 0;
 }

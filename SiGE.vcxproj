@@ -144,6 +144,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="dev_tools.cpp" />
     <ClCompile Include="geometry_lib.cpp" />
     <ClCompile Include="graphics_lib.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
@@ -155,6 +156,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="app_info.h" />
+    <ClInclude Include="dev_tools.h" />
     <ClInclude Include="geometry_lib.h" />
     <ClInclude Include="objects_lib.h" />
   </ItemGroup>

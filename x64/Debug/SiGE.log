@@ -1,2 +1,23 @@
 ﻿  win32_platform.cpp
-  SiGE.vcxproj -> C:\Repositories\SiGE\SiGE\x64\Debug\SiGE.exe
+C:\Repositories\SiGE\graphics_lib.cpp(40,12): warning C4244: инициализация: преобразование "float" в "int", возможна потеря данных
+C:\Repositories\SiGE\graphics_lib.cpp(42,12): warning C4244: инициализация: преобразование "float" в "int", возможна потеря данных
+C:\Repositories\SiGE\graphics_lib.cpp(55,17): warning C4244: инициализация: преобразование "float" в "int", возможна потеря данных
+C:\Repositories\SiGE\graphics_lib.cpp(57,17): warning C4244: инициализация: преобразование "float" в "int", возможна потеря данных
+C:\Repositories\SiGE\graphics_lib.cpp(87,12): warning C4244: инициализация: преобразование "float" в "int", возможна потеря данных
+C:\Repositories\SiGE\graphics_lib.cpp(89,12): warning C4244: инициализация: преобразование "float" в "int", возможна потеря данных
+C:\Repositories\SiGE\graphics_lib.cpp(102,17): warning C4244: инициализация: преобразование "float" в "int", возможна потеря данных
+C:\Repositories\SiGE\graphics_lib.cpp(104,17): warning C4244: инициализация: преобразование "float" в "int", возможна потеря данных
+C:\Repositories\SiGE\graphics_lib.cpp(147,35): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+C:\Repositories\SiGE\graphics_lib.cpp(147,24): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+C:\Repositories\SiGE\graphics_lib.cpp(178,19): warning C4244: инициализация: преобразование "float" в "int", возможна потеря данных
+C:\Repositories\SiGE\graphics_lib.cpp(179,19): warning C4244: инициализация: преобразование "float" в "int", возможна потеря данных
+C:\Repositories\SiGE\graphics_lib.cpp(195,30): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
+C:\Repositories\SiGE\graphics_lib.cpp(195,27): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
+C:\Repositories\SiGE\graphics_lib.cpp(195,24): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
+C:\Repositories\SiGE\win32_platform.cpp(66,16): warning C4305: инициализация: усечение из "double" в "float"
+C:\Repositories\SiGE\win32_platform.cpp(88,30): warning C4244: аргумент: преобразование "_Rep" в "unsigned int", возможна потеря данных
+          with
+          [
+              _Rep=__int64
+          ]
+  SiGE.vcxproj -> C:\Repositories\SiGE\x64\Debug\SiGE.exe

@@ -18,28 +18,34 @@
     <ClCompile Include="win32_platform.cpp">
       <Filter>Файлы ресурсов</Filter>
     </ClCompile>
-    <ClCompile Include="objects_lib.cpp">
-      <Filter>Файлы ресурсов</Filter>
-    </ClCompile>
-    <ClCompile Include="geometry_lib.cpp">
-      <Filter>Файлы ресурсов</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics_lib.cpp">
-      <Filter>Файлы ресурсов</Filter>
+    <ClCompile Include="dev_tools.cpp">
+      <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="callback_handler.cpp">
-      <Filter>Файлы ресурсов</Filter>
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="geometry_lib.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics_lib.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="objects_lib.cpp">
+      <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="app_info.h">
-      <Filter>Файлы ресурсов</Filter>
+    <ClInclude Include="dev_tools.h">
+      <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="objects_lib.h">
-      <Filter>Файлы ресурсов</Filter>
+    <ClInclude Include="app_info.h">
+      <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="geometry_lib.h">
-      <Filter>Файлы ресурсов</Filter>
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="objects_lib.h">
+      <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
