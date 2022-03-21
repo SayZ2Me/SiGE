@@ -72,7 +72,7 @@ Shape create_cube()
 	for (int x = 0; x < 2; x++) {
 		for (int y = 0; y < 2; y++) {
 			for (int z = 0; z < 2; z++) {
-				cube.add_point(Point((float)x, (float)y, (float)z));
+				cube.add_point(Point((float)x * 2 - 1, (float)y * 2 - 1, (float)z * 2 - 1));
 			}
 		}
 	}
@@ -83,11 +83,11 @@ Shape create_cube()
 	cube.add_tris(5, 6, 7);
 	cube.add_tris(5, 4, 6);
 
-	cube.add_tris(1, 4, 0);
-	cube.add_tris(1, 5, 4);
+	cube.add_tris(1, 0, 4);
+	cube.add_tris(1, 4, 5);
 
-	cube.add_tris(3, 2, 6);
-	cube.add_tris(3, 6, 7);
+	cube.add_tris(3, 6, 2);
+	cube.add_tris(3, 7, 6);
 
 	cube.add_tris(0, 2, 4);
 	cube.add_tris(4, 2, 6);
@@ -101,16 +101,29 @@ Shape create_cube()
 Shape create_plane()
 {
 	Shape plane = Shape();
-	for (int x = 0; x < 2; x++) {
-		for (int y = 0; y < 2; y++) {
-			plane.add_point(Point(x * 50, 0, y * 50));
-		}
-	}
 
-	plane.add_tris(0, 2, 1);
-	plane.add_tris(1, 2, 3);
+	plane.add_point(Point(-1, -1, 0));
+	plane.add_point(Point(1, -1, 0));
+	plane.add_point(Point(-1, 1, 0));
+	plane.add_point(Point(1, 1, 0));
+
+	plane.add_tris(0, 1, 2);
+	plane.add_tris(1, 3, 2);
 
 	return plane;
+}
+
+Shape create_triangle()
+{
+	Shape triangle = Shape();
+
+	triangle.add_point(Point(-1, -1, 0));
+	triangle.add_point(Point(1, -1, 0));
+	triangle.add_point(Point(0, 1, 0));
+
+	triangle.add_tris(0, 1, 2);
+
+	return triangle;
 }
 
 void rotate_x_axis(Shape* shape, float angle)

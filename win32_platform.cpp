@@ -15,7 +15,6 @@
 #define DEBUG_NEW new(_NORMAL_BLOCK, __FILE__, __LINE__)
 #define new DEBUG_NEW
 
-//Global Variables
 bool bCLOSED = false;
 bool showCursor = false;
 int g_windowWidth = 1920;

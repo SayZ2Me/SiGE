@@ -172,13 +172,19 @@ void draw_shape(Shape shape)
 
 		float Zangle = player.zNormal.angleBetween(VectorCamVert);
 
-		float Distance = VectorCamVert.lenght() * (cos(Zangle));
-		float PerspectiveDistortion = player.distabceToProjectionPlane / Distance;
+		float Distance = VectorCamVert.lenght() * cos(Zangle);
+		if (Distance > 0) {
+			float PerspectiveDistortion = player.distabceToProjectionPlane / Distance;
 
-		int ProjectionX = VectorCamVert.lenght() * cos(player.xNormal.angleBetween(VectorCamVert)) * PerspectiveDistortion * 100 + g_xDrawOffSet;
-		int ProjectionY = VectorCamVert.lenght() * cos(player.yNormal.angleBetween(VectorCamVert)) * PerspectiveDistortion * 100 + g_yDrawOffSet;
+			int ProjectionX = VectorCamVert.lenght() * cos(player.xNormal.angleBetween(VectorCamVert)) * PerspectiveDistortion * g_windowHeight / 21.6 + g_xDrawOffSet;
+			int ProjectionY = VectorCamVert.lenght() * cos(player.yNormal.angleBetween(VectorCamVert)) * PerspectiveDistortion * g_windowHeight / 21.6 + g_yDrawOffSet;
 
-		BufferPoints2D.push_back(Point2D(ProjectionX, ProjectionY));
+			BufferPoints2D.push_back(Point2D(ProjectionX, ProjectionY));
+		}
+		else
+		{
+			BufferPoints2D.push_back(Point2D(-1, -1));
+		}
 		
 	}
 	projectionTime = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()) - projectionTime;
@@ -195,7 +201,7 @@ void draw_shape(Shape shape)
 			Point color = Point(i, i, i);
 			draw_triangle(p0, p1, p2, &color);
 		}
-		i += 10;
+		i += 20;
 	}
 	drawTime = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()) - drawTime;
 	drawTimeSum += drawTime;
