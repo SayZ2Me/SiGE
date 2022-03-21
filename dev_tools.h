@@ -5,8 +5,11 @@
 
 class Debugger
 {
+private:
+	std::string debug_folder_name;
 public:
-	void Log(std::string message, std::string * debug_folder_name);
+	void log(std::string message);
+	void setDebugFolderName(std::string debug_folder_name);
 };
 
-void create_debug_folder(std::string *  debug_folder_name);
+void create_debug_folder(Debugger * Debug);

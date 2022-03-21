@@ -22,7 +22,6 @@ int g_windowHeight = 1280;
 int g_xDrawOffSet = g_windowWidth/2;
 int g_yDrawOffSet = g_windowHeight/2;
 void* g_bufferMemory;
-std::string g_debug_folder_name = "";
 BITMAPINFO g_bufferBitmapInfo;
 std::vector<Shape> g_scene;
 Camera player = Camera(Point(0, 0, 10));
@@ -33,13 +32,19 @@ std::chrono::milliseconds drawTimeSum;
 std::chrono::milliseconds projectionTimeSum;
 std::chrono::milliseconds deltaTime;
 std::chrono::milliseconds frameStartTime;
+std::chrono::milliseconds programmStartTime;
+std::chrono::milliseconds programmEndTime;
+int drawCallCounter = 0;
+int frameCounter = 0;
 
 #include "graphics_lib.cpp"
 #include "callback_handler.cpp"
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLine, int nCmdShow) 
 {
-	create_debug_folder(&g_debug_folder_name);
+	create_debug_folder(&Debug);
+
+	Debug.log("Debug start");
 
 	const wchar_t className[] = L"Standart Window Class";
 
@@ -57,16 +62,18 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLine,
 
 	Shape cube;
 	cube = create_cube();
-	Shape plane;
-	plane = create_plane();
+	g_scene.push_back(cube);
+	move_x_axis(&cube, 2);
+	move_y_axis(&cube, 2);
+	move_z_axis(&cube, 2);
 	g_scene.push_back(cube);
 	//g_scene.push_back(plane);
 
-	float i = 0.01;
+	programmStartTime = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch());
 
 	while (!bCLOSED) 
 	{
-
+		frameCounter++;
 		frameStartTime = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch());
 		MSG message;
 		while (PeekMessage(&message, window, 0, 0, PM_REMOVE)) 
@@ -92,13 +99,17 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLine,
 
 		deltaTime = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()) - frameStartTime;
 	}
+	programmEndTime = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch());
 
 	//Clear Scene Memory
 	std::vector<Shape>().swap(g_scene);
 	_CrtDumpMemoryLeaks();
 
-	Debug.Log("drawTimeSum : "+std::to_string(drawTimeSum.count()), &g_debug_folder_name);
-	Debug.Log("projectionTimeSum : "+std::to_string(projectionTimeSum.count()), &g_debug_folder_name);
+	Debug.log("drawTimeSum : " + std::to_string(drawTimeSum.count()));
+	Debug.log("projectionTimeSum : " + std::to_string(projectionTimeSum.count()));
+	Debug.log("drawCallCounter : " + std::to_string(drawCallCounter));
+	Debug.log("avgFPS : " + std::to_string(frameCounter/((programmEndTime.count()-programmStartTime.count())/1000)));
+	Debug.log("Debug end");
 
 	return 0;
 }

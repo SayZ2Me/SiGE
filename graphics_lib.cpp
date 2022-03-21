@@ -4,6 +4,43 @@ const Vector c_zOrigin = Vector(0, 0, 1);
 
 unsigned int* pixel;
 
+class zBuffer 
+{
+private:
+	int width;
+	int height;
+	float* _zBuffer = nullptr;
+public:
+	zBuffer(int width, int height) 
+	{
+		this->width = width;
+		this->height = height;
+		_zBuffer = new float[width * height];
+	}
+	~zBuffer()
+	{
+		delete[] _zBuffer;
+		_zBuffer = nullptr;
+	}
+	void Clear()
+	{
+		const int nDepth = width * height;
+		for (int i = 0; i < nDepth; i++)
+		{
+			_zBuffer[i] = std::numeric_limits<float>::infinity();
+		}
+	}
+	bool testAndUpdate(int x, int y, float z) 
+	{
+		if (_zBuffer[y * width + x] > z) 
+		{
+			_zBuffer[y * width + x] = z;
+			return true;
+		}
+		return false;
+	}
+};
+
 bool compare_float(float A, float B, float epsilon = 0.05f)
 {
 	return (abs(A - B) < epsilon);
@@ -197,11 +234,15 @@ void draw_shape(Shape shape)
 		Point2D* p1 = &BufferPoints2D[TrianglesIt->p1];
 		Point2D* p2 = &BufferPoints2D[TrianglesIt->p2];
 
-		if (p0->x != -1 and p1->x != -1 and p2->x != -1) {
+		float triangleFaceDirection = (p0->x * p1->y - p0->y * p1->x) + (p1->x * p2->y - p1->y * p2->x) + (p2->x * p0->y - p2->y * p0->x);
+
+		if (p0->x != -1 and p1->x != -1 and p2->x != -1 and triangleFaceDirection>0) 
+		{
 			Point color = Point(i, i, i);
+			drawCallCounter++;
 			draw_triangle(p0, p1, p2, &color);
 		}
-		i += 20;
+		i += 10;
 	}
 	drawTime = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()) - drawTime;
 	drawTimeSum += drawTime;

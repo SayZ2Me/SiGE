@@ -2,7 +2,7 @@
 <Project>
   <ProjectOutputs>
     <ProjectOutput>
-      <FullPath>C:\Users\SayZ\Documents\GitHub\SiGE\x64\Debug\SiGE.exe</FullPath>
+      <FullPath>C:\Users\SayZ\Documents\GitHub\SiGE\x64\Release\SiGE.exe</FullPath>
     </ProjectOutput>
   </ProjectOutputs>
   <ContentFiles />
