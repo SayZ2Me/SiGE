@@ -5,9 +5,6 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	{
 	case WM_CLOSE:
 	case WM_DESTROY: {
-		projectionTimeSum;
-		drawTimeSum;
-		int a = 0;
 		bCLOSED = true;
 	}break;
 
@@ -145,6 +142,9 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		g_bufferBitmapInfo.bmiHeader.biPlanes = 1;
 		g_bufferBitmapInfo.bmiHeader.biBitCount = 32;
 		g_bufferBitmapInfo.bmiHeader.biCompression = BI_RGB;
+
+		delete[] g_zBuffer;
+		g_zBuffer = new float[g_windowWidth * g_windowHeight];
 
 	}break;
 

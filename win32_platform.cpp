@@ -22,6 +22,7 @@ int g_windowHeight = 1280;
 int g_xDrawOffSet = g_windowWidth/2;
 int g_yDrawOffSet = g_windowHeight/2;
 void* g_bufferMemory;
+float* g_zBuffer;
 BITMAPINFO g_bufferBitmapInfo;
 std::vector<Shape> g_scene;
 Camera player = Camera(Point(0, 0, 10));
@@ -61,12 +62,14 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLine,
 	ShowCursor(showCursor);
 
 	Shape cube;
-	cube = create_cube();
-	g_scene.push_back(cube);
-	move_x_axis(&cube, 2);
-	move_y_axis(&cube, 2);
-	move_z_axis(&cube, 2);
-	g_scene.push_back(cube);
+	for (int i = 0; i < 100; i++) {
+		cube = create_cube();
+		cube.set_color(i * 2, i * 2, i * 2);
+		move_x_axis(&cube, 2*i);
+		move_y_axis(&cube, 2*i);
+		move_z_axis(&cube, 2*i);
+		g_scene.push_back(cube);
+	}
 	//g_scene.push_back(plane);
 
 	programmStartTime = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch());
@@ -99,16 +102,20 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLine,
 
 		deltaTime = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()) - frameStartTime;
 	}
-	programmEndTime = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch());
+	programmEndTime = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()); 
+	
+	if (g_bufferMemory) {
+		Debug.log("Mem realeased");
+		VirtualFree(g_bufferMemory, 0, MEM_RELEASE);
+	}
 
-	//Clear Scene Memory
 	std::vector<Shape>().swap(g_scene);
 	_CrtDumpMemoryLeaks();
 
 	Debug.log("drawTimeSum : " + std::to_string(drawTimeSum.count()));
 	Debug.log("projectionTimeSum : " + std::to_string(projectionTimeSum.count()));
 	Debug.log("drawCallCounter : " + std::to_string(drawCallCounter));
-	Debug.log("avgFPS : " + std::to_string(frameCounter/((programmEndTime.count()-programmStartTime.count())/1000)));
+	Debug.log("avgFPS : " + std::to_string(frameCounter / ((programmEndTime.count() - programmStartTime.count()) / 1000)));
 	Debug.log("Debug end");
 
 	return 0;

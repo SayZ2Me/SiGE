@@ -37,12 +37,14 @@ class Shape
 public:
 	std::vector<Point> vertecies;
 	std::vector<Triangle> tris;
+	Point color;
 
 	Shape();
 	~Shape();
 
 	void add_point(Point);
 	void add_tris(int p0, int p1, int p2);
+	void set_color(int r, int g, int b);
 };
 
 Shape create_cube();

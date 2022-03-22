@@ -63,7 +63,12 @@ void Shape::add_point(Point p)
 
 void Shape::add_tris(int p0, int p1, int p2)
 {
-	tris.push_back(Triangle(p0,p1,p2));
+	tris.push_back(Triangle(p0, p1, p2));
+}
+
+void Shape::set_color(int r, int g, int b)
+{
+	this->color = Point(r, g, b);
 }
 
 Shape create_cube()

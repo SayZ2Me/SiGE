@@ -1,15 +1,17 @@
 #include "geometry_lib.h"
 
-Point2D::Point2D(int x, int y)
+Point2D::Point2D(int x, int y, float d)
 {
 	this->x = x;
 	this->y = y;
+	this->d = d;
 }
 
 Point2D::Point2D()
 {
 	this->x = 0;
 	this->y = 0;
+	this->d = 0;
 }
 
 Point2D Point2D::operator+(Point2D& p)
@@ -17,6 +19,7 @@ Point2D Point2D::operator+(Point2D& p)
 	Point2D ret;
 	ret.x = x + p.x;
 	ret.y = y + p.y;
+	ret.d = d + p.d;
 	return ret;
 }
 
@@ -25,6 +28,7 @@ Point2D Point2D::operator-(Point2D& p)
 	Point2D ret;
 	ret.x = x - p.x;
 	ret.y = y - p.y;
+	ret.d = d - p.d;
 	return ret;
 }
 
@@ -72,6 +76,13 @@ Vector::Vector(float x, float y, float z)
 	this->x = x;
 	this->y = y;
 	this->z = z;
+}
+
+Vector::Vector(Point p0, Point p1)
+{
+	this->x = p0.x - p1.x;
+	this->y = p0.y - p1.y;
+	this->z = p0.z - p1.z;
 }
 
 Vector::Vector()

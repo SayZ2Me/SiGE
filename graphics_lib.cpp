@@ -4,43 +4,6 @@ const Vector c_zOrigin = Vector(0, 0, 1);
 
 unsigned int* pixel;
 
-class zBuffer 
-{
-private:
-	int width;
-	int height;
-	float* _zBuffer = nullptr;
-public:
-	zBuffer(int width, int height) 
-	{
-		this->width = width;
-		this->height = height;
-		_zBuffer = new float[width * height];
-	}
-	~zBuffer()
-	{
-		delete[] _zBuffer;
-		_zBuffer = nullptr;
-	}
-	void Clear()
-	{
-		const int nDepth = width * height;
-		for (int i = 0; i < nDepth; i++)
-		{
-			_zBuffer[i] = std::numeric_limits<float>::infinity();
-		}
-	}
-	bool testAndUpdate(int x, int y, float z) 
-	{
-		if (_zBuffer[y * width + x] > z) 
-		{
-			_zBuffer[y * width + x] = z;
-			return true;
-		}
-		return false;
-	}
-};
-
 bool compare_float(float A, float B, float epsilon = 0.05f)
 {
 	return (abs(A - B) < epsilon);
@@ -52,6 +15,7 @@ void clear_screen() {
 	for (int y = 0; y < g_windowHeight; y++) {
 		for (int x = 0; x < g_windowWidth; x++) {
 			*pixel++ = 0X000000;
+			g_zBuffer[x + y * g_windowWidth] = 65535;
 		}
 	}
 }
@@ -61,7 +25,7 @@ void fill_screen(short int r, short int g, short int b) {
 
 	for (int y = 0; y < g_windowHeight; y++) {
 		for (int x = 0; x < g_windowWidth; x++) {
-			*pixel++ = RGB(r,g,b);
+			*pixel++ = RGB(r, g, b);
 		}
 	}
 }
@@ -77,6 +41,8 @@ void draw_flat_bottom_triangle(Point2D p0, Point2D p1, Point2D p2, Point color)
 	int y_min = p0.y;
 
 	int y_max = p2.y;
+
+	int depth = (p0.d + p1.d + p2.d)/3;
 
 	if (y_min < 0)
 	{
@@ -107,7 +73,15 @@ void draw_flat_bottom_triangle(Point2D p0, Point2D p1, Point2D p2, Point color)
 
 		for (int x = x_border1; x <= x_border2; x++)
 		{
-			*pixel++ = RGB(color.z, color.y, color.x);
+			if (g_zBuffer[x + y * g_windowWidth] > depth)
+			{
+				g_zBuffer[x + y * g_windowWidth] = depth;
+				*pixel++ = RGB(color.x, color.y, color.z);
+			}
+			else
+			{
+				*pixel++;
+			}
 		}
 
 	}
@@ -125,6 +99,8 @@ void draw_flat_top_triangle(Point2D p0, Point2D p1, Point2D p2, Point color)
 
 	int y_max = p2.y;
 
+	int depth = (p0.d + p1.d + p2.d) / 3;
+
 	if (y_min < 0)
 	{
 		y_min = 0;
@@ -154,7 +130,15 @@ void draw_flat_top_triangle(Point2D p0, Point2D p1, Point2D p2, Point color)
 
 		for (int x = x_border1; x <= x_border2; x++)
 		{
-			*pixel++ = RGB(color.z, color.y, color.x);
+			if (g_zBuffer[x + y * g_windowWidth] > depth)
+			{
+				g_zBuffer[x + y * g_windowWidth] = depth;
+				*pixel++ = RGB(color.x, color.y, color.z);
+			}
+			else
+			{
+				*pixel++;
+			}
 		}
 	}
 }
@@ -180,8 +164,9 @@ void draw_triangle(Point2D* p0, Point2D* p1, Point2D* p2, Point* color)
 	{
 		float AlphaSplit = (p1->y - p0->y) / (p2->y - p0->y);
 		float x_split = p0->x + AlphaSplit * (p2->x - p0->x);
+		float d_split = p0->d + AlphaSplit * (p2->d - p0->d);
 
-		Point2D ps = Point2D(x_split, p1->y);
+		Point2D ps = Point2D(x_split, p1->y, d_split);
 
 		if (p1->x > x_split)
 		{
@@ -216,18 +201,17 @@ void draw_shape(Shape shape)
 			int ProjectionX = VectorCamVert.lenght() * cos(player.xNormal.angleBetween(VectorCamVert)) * PerspectiveDistortion * g_windowHeight / 21.6 + g_xDrawOffSet;
 			int ProjectionY = VectorCamVert.lenght() * cos(player.yNormal.angleBetween(VectorCamVert)) * PerspectiveDistortion * g_windowHeight / 21.6 + g_yDrawOffSet;
 
-			BufferPoints2D.push_back(Point2D(ProjectionX, ProjectionY));
+			BufferPoints2D.push_back(Point2D(ProjectionX, ProjectionY, VectorCamVert.lenght()));
 		}
 		else
 		{
-			BufferPoints2D.push_back(Point2D(-1, -1));
+			BufferPoints2D.push_back(Point2D(-1, 0, 0));
 		}
 		
 	}
 	projectionTime = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()) - projectionTime;
 	std::chrono::milliseconds drawTime = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch());
 	std::vector<Triangle>::iterator TrianglesIt = shape.tris.begin();
-	int i = 60;
 	for (; TrianglesIt < shape.tris.end(); TrianglesIt++)
 	{
 		Point2D* p0 = &BufferPoints2D[TrianglesIt->p0];
@@ -238,11 +222,9 @@ void draw_shape(Shape shape)
 
 		if (p0->x != -1 and p1->x != -1 and p2->x != -1 and triangleFaceDirection>0) 
 		{
-			Point color = Point(i, i, i);
 			drawCallCounter++;
-			draw_triangle(p0, p1, p2, &color);
+			draw_triangle(p0, p1, p2, &shape.color);
 		}
-		i += 10;
 	}
 	drawTime = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()) - drawTime;
 	drawTimeSum += drawTime;

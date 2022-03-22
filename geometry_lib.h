@@ -8,8 +8,9 @@ class Point2D
 public:
 	float x = 0;
 	float y = 0;
+	float d = 0;
 
-	Point2D(int x, int y);
+	Point2D(int x, int y, float d);
 	Point2D();
 
 	Point2D operator+ (Point2D& p);
@@ -48,6 +49,7 @@ public:
 	float z = 0;
 
 	Vector(float x, float y, float z);
+	Vector(Point p0, Point p1);
 	Vector();
 
 	float lenght();
