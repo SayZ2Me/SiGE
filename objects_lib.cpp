@@ -49,6 +49,21 @@ void Camera::rotate(float x, float y)
 	zNormal = defzNormal;
 }
 
+LightSource::LightSource(Point position, Vector direction) 
+{
+	this->position = position;
+	this->direction = direction;
+}
+LightSource::~LightSource() {}
+Point LightSource::get_position()
+{
+	return this->position;
+}
+Vector LightSource::get_direction()
+{
+	return this->direction;
+}
+
 Shape::Shape() {}
 Shape::~Shape() 
 {
@@ -77,7 +92,7 @@ Shape create_cube()
 	for (int x = 0; x < 2; x++) {
 		for (int y = 0; y < 2; y++) {
 			for (int z = 0; z < 2; z++) {
-				cube.add_point(Point((float)x * 2 - 1, (float)y * 2 - 1, (float)z * 2 - 1));
+				cube.add_point(Point(((float)x * 2 - 1)/5, ((float)y * 2 - 1)/5, ((float)z * 2 - 1)/5));
 			}
 		}
 	}

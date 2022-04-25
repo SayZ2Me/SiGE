@@ -31,6 +31,17 @@ public:
 
 	void rotate(float x, float y);
 };
+class LightSource 
+{
+private:
+	Point position;
+	Vector direction;
+public:
+	LightSource(Point position, Vector direction);
+	~LightSource();
+	Vector get_direction();
+	Point get_position();
+};
 
 class Shape
 {

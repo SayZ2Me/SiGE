@@ -28,6 +28,7 @@ std::vector<Shape> g_scene;
 Camera player = Camera(Point(0, 0, 10));
 Debugger Debug = Debugger();
 POINT cursorPos;
+LightSource g_Illumination = LightSource(Point(0, 0, 0), Vector(-0.25, -0.5, -1));
 
 std::chrono::milliseconds drawTimeSum;
 std::chrono::milliseconds projectionTimeSum;
@@ -60,17 +61,23 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLine,
 	HDC hdc = GetDC(window);
 
 	ShowCursor(showCursor);
-
+	
 	Shape cube;
-	for (int i = 0; i < 100; i++) {
-		cube = create_cube();
-		cube.set_color(i * 2, i * 2, i * 2);
-		move_x_axis(&cube, 2*i);
-		move_y_axis(&cube, 2*i);
-		move_z_axis(&cube, 2*i);
-		g_scene.push_back(cube);
+	for (int x = 0; x < 10; x++)
+	{
+		for (int y = 0; y < 10; y++)
+		{
+			for (int z = 0; z < 10; z++)
+			{
+				cube = create_cube();
+				cube.set_color(100+x, 50+y*20, 20+z*30);
+				move_x_axis(&cube, x);
+				move_y_axis(&cube, y);
+				move_z_axis(&cube, z);
+				g_scene.push_back(cube);
+			}
+		}
 	}
-	//g_scene.push_back(plane);
 
 	programmStartTime = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch());
 
@@ -108,7 +115,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLine,
 		Debug.log("Mem realeased");
 		VirtualFree(g_bufferMemory, 0, MEM_RELEASE);
 	}
-
+	delete[] g_zBuffer;
 	std::vector<Shape>().swap(g_scene);
 	_CrtDumpMemoryLeaks();
 

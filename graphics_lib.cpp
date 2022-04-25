@@ -188,6 +188,8 @@ void draw_shape(Shape shape)
 
 	std::vector<Point>::iterator VerteciesIt = shape.vertecies.begin();
 
+	Vector illuminationVecor = g_Illumination.get_direction();
+
 	for (; VerteciesIt < shape.vertecies.end(); VerteciesIt++) 
 	{
 		Vector VectorCamVert = Vector(player.position.x - VerteciesIt->x, player.position.y - VerteciesIt->y, player.position.z - VerteciesIt->z);
@@ -220,10 +222,22 @@ void draw_shape(Shape shape)
 
 		float triangleFaceDirection = (p0->x * p1->y - p0->y * p1->x) + (p1->x * p2->y - p1->y * p2->x) + (p2->x * p0->y - p2->y * p0->x);
 
-		if (p0->x != -1 and p1->x != -1 and p2->x != -1 and triangleFaceDirection>0) 
+		if (p0->x != -1 and p1->x != -1 and p2->x != -1 and triangleFaceDirection > 0)
 		{
+
+			Vector u = Vector(shape.vertecies[TrianglesIt->p0].x - shape.vertecies[TrianglesIt->p1].x, shape.vertecies[TrianglesIt->p0].y - shape.vertecies[TrianglesIt->p1].y, shape.vertecies[TrianglesIt->p0].z - shape.vertecies[TrianglesIt->p1].z);
+
+			Vector v = Vector(shape.vertecies[TrianglesIt->p0].x - shape.vertecies[TrianglesIt->p2].x, shape.vertecies[TrianglesIt->p0].y - shape.vertecies[TrianglesIt->p2].y, shape.vertecies[TrianglesIt->p0].z - shape.vertecies[TrianglesIt->p2].z);
+
+			Vector normalVector = u * v;
+
+			float triangleIllumination = 1+normalVector.angleBetween(illuminationVecor);
+
+			Point triangleColor = Point(shape.color.x / triangleIllumination, shape.color.y / triangleIllumination, shape.color.z / triangleIllumination);
+
 			drawCallCounter++;
-			draw_triangle(p0, p1, p2, &shape.color);
+			
+			draw_triangle(p0, p1, p2, &triangleColor);
 		}
 	}
 	drawTime = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()) - drawTime;
